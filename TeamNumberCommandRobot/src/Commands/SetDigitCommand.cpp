@@ -16,6 +16,10 @@
 
 #include <Commands/SetDigitCommand.h>
 
+SetDigitCommand::SetDigitCommand() :
+	SetDigitCommand(DigitSelectEnum::First)
+{ }
+
 SetDigitCommand::SetDigitCommand(DigitSelectEnum selectedDigit) :
 	_selectedDigit(selectedDigit)
 {
@@ -40,6 +44,7 @@ void SetDigitCommand::Initialize()
 void SetDigitCommand::Execute()
 {
 	std::cout << "SetDigitCommand::Execute " << _selectedDigit << std::endl;
+	SmartDashboard::PutNumber("SetDigitCommand", _selectedDigit);
 	CommandBase::TeamNumDigitSelectSubsystem->Display(_selectedDigit);
 
 	switch(_selectedDigit)

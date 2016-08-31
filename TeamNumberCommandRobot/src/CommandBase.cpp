@@ -37,4 +37,8 @@ void CommandBase::init()
 	TeamNumDigitSelectSubsystem.reset(new DigitSelectSubsystem());
 
 	oi.reset(new OI());
+
+	// Display subsystem status on the SmartDashboard:
+	// http://wpilib.screenstepslive.com/s/4485/m/26401/l/255422-displaying-the-status-of-commands-and-subsystems
+	SmartDashboard::PutData(TeamNumDigitPwmSubsystem.get());
 }

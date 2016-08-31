@@ -22,15 +22,26 @@
 
 void Robot::RobotInit()
 {
+	// For SmartDashboard see http://wpilib.screenstepslive.com/s/4485/m/26401/l/255407-getting-started-with-the-smartdashboard.
+
 	CommandBase::init();
 
-	//chooser = new SendableChooser();
-	//chooser->AddDefault("Default Auto", new ExampleCommand());
-	//chooser->AddObject("My Auto", new TestCommand());
-	//SmartDashboard::PutData("Auto Modes", chooser);
-	//SmartDashboard::PutData("Chooser", chooser);
+	// Display the Scheduler status on the SmartDashboard.
+	// http://wpilib.screenstepslive.com/s/4485/m/26401/l/255422-displaying-the-status-of-commands-and-subsystems
+	SmartDashboard::PutData(Scheduler::GetInstance());
 
-	//SmartDashboard::PutData(_setTeamNumCmdGroup);
+	// Choose autonomous command from the SmartDashboard.
+	// http://wpilib.screenstepslive.com/s/4485/m/26401/l/255419-choosing-an-autonomous-program-from-smartdashboard
+	chooser = new SendableChooser();
+	chooser->AddDefault("Default Auto", new SetDigitCommand(DigitSelectEnum::First));
+	chooser->AddObject("Second Digit", new SetDigitCommand(DigitSelectEnum::Second));
+	chooser->AddObject("Third Digit", new SetDigitCommand(DigitSelectEnum::Third));
+	SmartDashboard::PutData("Autonomous modes", chooser);
+
+	// Test commands from the SmartDashboard.
+	// http://wpilib.screenstepslive.com/s/4485/m/26401/l/255418-testing-commands
+	// Note: Have verified this works for Teleoperated and Practice modes but having a problem with Test mode.
+	SmartDashboard::PutData("Set First Digit", new SetDigitCommand());
 }
 
 /**
@@ -47,28 +58,10 @@ void Robot::DisabledPeriodic()
 	Scheduler::GetInstance()->Run();
 }
 
-/**
- * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
- * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
- * Dashboard, remove all of the chooser code and uncomment the GetString code to get the auto name from the text box
- * below the Gyro
- *
- * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
- * or additional comparisons to the if-else structure below with additional strings & commands.
- */
 void Robot::AutonomousInit()
 {
-	// std::string autoSelected = SmartDashboard::GetString("Auto Selector", "Default");
-	//if(autoSelected == "My Auto") {
-	//	autonomousCommand.reset(new TestCommand());
-	//} else {
-	//	autonomousCommand.reset(new ExampleCommand());
-	//}
-
-	/*autonomousCommand.reset((Command *)chooser->GetSelected());
-
-	if (autonomousCommand != NULL)
-		autonomousCommand->Start();*/
+	autonomousCommand = (Command *) chooser->GetSelected();
+	autonomousCommand->Start();
 }
 
 void Robot::AutonomousPeriodic()
@@ -93,30 +86,21 @@ void Robot::TeleopPeriodic()
 
 void Robot::TestInit()
 {
-	_setTeamNumCmdGroup.reset(new SetTeamNumCmdGroup(TEAM_NUMBER));
-	_setTeamNumCmdGroup->Start();
-	//TestCommandGroup testCmdGroup{};
-	//testCmdGroup.Start();
-	//Scheduler::GetInstance()->Run();
-	//_testCommandGroup->Start();
+	//_setTeamNumCmdGroup.reset(new SetTeamNumCmdGroup(TEAM_NUMBER));
+	//_setTeamNumCmdGroup->Start();
 
+	//Scheduler::GetInstance()->Run();
 }
 
 void Robot::TestPeriodic()
 {
 	//std::cout << "Robot::TestPeriodic" << std::endl;
 
-	//Scheduler::GetInstance()->Run();
+	Scheduler::GetInstance()->Run();
 	//LiveWindow::GetInstance()->Run();
 
-	//if(IsEnabled()) {
-		//_setDigitOneCommand->Execute();
-		//_setDigitTwoCommand->Execute();
-		//_testCommandGroup->Run();
-	//}
-
-	_setTeamNumCmdGroup->Run();
+	//_setTeamNumCmdGroup->Run();
 }
 
-// Macro (yuck, yuck, yuck) that produces the main function entry point for the robot program.
+// Macro (yuck, yuck, yuck) that supplies the main function entry point for the robot program.
 START_ROBOT_CLASS(Robot)

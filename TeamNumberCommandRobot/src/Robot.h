@@ -17,8 +17,8 @@
 #ifndef ROBOT_H_
 #define ROBOT_H_
 
-#include <Commands/SetDigitCommand.h>
-#include <Commands/SetTeamNumCmdGroup.h>
+#include "Commands/SetDigitCommand.h"
+#include "Commands/SetTeamNumCmdGroup.h"
 #include "WPILib.h"
 #include "Subsystems/DigitPwmSubsystem.h"
 
@@ -28,9 +28,8 @@ public:
 	//static OI * oi;
 
 private:
-	//see above, but for commands
 	//LiveWindow * lw;
-	//Command * autocommand;
+
 	void RobotInit();
 	void DisabledInit();
 	void AutonomousInit();
@@ -43,6 +42,9 @@ private:
 	void TestPeriodic();
 
 	std::unique_ptr<SetTeamNumCmdGroup> _setTeamNumCmdGroup{ nullptr };
+
+	Command * autonomousCommand { nullptr };
+	SendableChooser *chooser { nullptr };
 };
 
 #endif /* ROBOT_H_ */

@@ -28,6 +28,7 @@
 class SetDigitCommand : public CommandBase
 {
 public:
+	SetDigitCommand();
 	SetDigitCommand(DigitSelectEnum selectedDigit);
 	void Initialize();
 	void Execute();

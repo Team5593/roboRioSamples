@@ -2,11 +2,10 @@
 // FileName: OI.h
 //
 // Description:
-// OI stands for "Operator Input".
+// The OI in this class stands for "Operator Input". The purpose of this class
+// seems to be to allow commands to be run in response to joystick commands.
 //
-// ToDo: Get a grip on what this class is meant to do.
-// Hypothesis: This class should be the interface between the "FRC PC Dashboard"
-// or "Smart Dashboard" and the rboto program.
+// For an example see: http://wpilib.screenstepslive.com/s/4485/m/13810/l/241904-running-commands-on-joystick-input
 //
 // Author(s):
 // Aaron Clauson (aaron.clauson@gmail.com)
