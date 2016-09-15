@@ -43,27 +43,34 @@ void SetDigitCommand::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void SetDigitCommand::Execute()
 {
-	std::cout << "SetDigitCommand::Execute " << _selectedDigit << std::endl;
-	SmartDashboard::PutNumber("SetDigitCommand", _selectedDigit);
-	CommandBase::TeamNumDigitSelectSubsystem->Display(_selectedDigit);
-
-	switch(_selectedDigit)
+	try
 	{
-		case DigitSelectEnum::First:
-			CommandBase::TeamNumDigitPwmSubsystem->DisplayDigit(TEAM_NUMBER / 1000);
-			break;
-		case DigitSelectEnum::Second:
-			CommandBase::TeamNumDigitPwmSubsystem->DisplayDigit(TEAM_NUMBER % 1000 / 100);
-			break;
-		case DigitSelectEnum::Third:
-			CommandBase::TeamNumDigitPwmSubsystem->DisplayDigit(TEAM_NUMBER % 100 / 10);
-			break;
-		case DigitSelectEnum::Fourth:
-			CommandBase::TeamNumDigitPwmSubsystem->DisplayDigit(TEAM_NUMBER % 10);
-			break;
-	}
+		std::cout << "SetDigitCommand::Execute " << _selectedDigit << std::endl;
+		SmartDashboard::PutNumber("SetDigitCommand", _selectedDigit);
+		CommandBase::TeamNumDigitSelectSubsystem->Display(_selectedDigit);
 
-	Wait(SET_DIGIT_WAIT_SECONDS);
+		switch(_selectedDigit)
+		{
+			case DigitSelectEnum::First:
+				CommandBase::TeamNumDigitPwmSubsystem->DisplayDigit(TEAM_NUMBER / 1000);
+				break;
+			case DigitSelectEnum::Second:
+				CommandBase::TeamNumDigitPwmSubsystem->DisplayDigit(TEAM_NUMBER % 1000 / 100);
+				break;
+			case DigitSelectEnum::Third:
+				CommandBase::TeamNumDigitPwmSubsystem->DisplayDigit(TEAM_NUMBER % 100 / 10);
+				break;
+			case DigitSelectEnum::Fourth:
+				CommandBase::TeamNumDigitPwmSubsystem->DisplayDigit(TEAM_NUMBER % 10);
+				break;
+		}
+
+		Wait(SET_DIGIT_WAIT_SECONDS);
+	}
+	catch(std::exception& excp)
+	{
+		std::cout << "Exception SetDigitCommand::Execute. " << excp.what() << std::endl;
+	}
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -84,4 +91,19 @@ void SetDigitCommand::End()
 void SetDigitCommand::Interrupted()
 {
 	std::cout << "SetDigitCommand::Interrupted" << std::endl;
+}
+
+void SetDigitCommand::DoBackgroundWork()
+{
+	try
+	{
+		for(int i=0; i<10; i++) {
+			std::cout << "DoBackgroundWork " << i << std::endl;
+			std::this_thread::sleep_for(std::chrono::milliseconds(1));
+		}
+	}
+	catch(std::exception& excp)
+	{
+		std::cout << "Exception SetDigitCommand::DoBackgroundWork. " << excp.what() << std::endl;
+	}
 }

@@ -29,3 +29,18 @@ void SetTeamNumCmdGroup::Execute()
 {
 	//std::cout << "SetTeamNumCmdGroup::Execute" << std::endl;
 }
+
+void SetTeamNumCmdGroup::DoBackgroundWork()
+{
+	try
+	{
+		for(int i=0; i<10; i++) {
+			std::cout << "DoBackgroundWork " << i << std::endl;
+			std::this_thread::sleep_for(std::chrono::milliseconds(1));
+		}
+	}
+	catch(std::exception& excp)
+	{
+		std::cout << "Exception SetDigitCommand::DoBackgroundWork. " << excp.what() << std::endl;
+	}
+}

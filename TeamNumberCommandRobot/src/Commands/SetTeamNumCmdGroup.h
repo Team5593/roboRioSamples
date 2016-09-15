@@ -30,6 +30,7 @@ class SetTeamNumCmdGroup: public CommandGroup
 public:
 	SetTeamNumCmdGroup(ushort teamNumber);
 	virtual void Execute();
+	void DoBackgroundWork();
 private:
 	ushort _teamNumber;
 };

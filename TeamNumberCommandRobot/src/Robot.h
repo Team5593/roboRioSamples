@@ -41,10 +41,15 @@ private:
 	void TeleopPeriodic();
 	void TestPeriodic();
 
-	std::unique_ptr<SetTeamNumCmdGroup> _setTeamNumCmdGroup{ nullptr };
-
 	Command * autonomousCommand { nullptr };
 	SendableChooser *chooser { nullptr };
+
+	// Commands used in Test mode to verify operation.
+	std::unique_ptr<SetTeamNumCmdGroup> _setTeamNumCmdGroup{ nullptr };
+	std::unique_ptr<SetDigitCommand> _testSetFirstDigitCommand { nullptr };
+	std::unique_ptr<SetDigitCommand> _testSetSecondDigitCommand { nullptr };
+	std::unique_ptr<SetDigitCommand> _testSetThirdDigitCommand { nullptr };
+	std::unique_ptr<SetDigitCommand> _testSetFourthDigitCommand { nullptr };
 };
 
 #endif /* ROBOT_H_ */

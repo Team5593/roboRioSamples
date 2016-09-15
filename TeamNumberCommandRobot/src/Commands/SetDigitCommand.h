@@ -35,8 +35,10 @@ public:
 	bool IsFinished();
 	void End();
 	void Interrupted();
+	void DoBackgroundWork();
 
 private:
+
 	DigitSelectEnum _selectedDigit;
 };
 
